@@ -395,6 +395,66 @@
     .contact-inner { padding:36px 24px; }
     .profile-3d-wrapper,.profile-3d-outer { width:240px; height:240px; }
   }
+  /* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  z-index: 1100;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(3px);
+  z-index: 999;
+}
+.nav-overlay.open { display: block; }
+
+@media (max-width: 900px) {
+  .hamburger { display: flex; }
+  .nav-links {
+    position: fixed;
+    top: 0; right: -100%;
+    width: 72%; max-width: 320px;
+    height: 100vh;
+    background: var(--card);
+    flex-direction: column;
+    padding: 80px 30px 30px;
+    gap: 10px;
+    z-index: 1000;
+    transition: right 0.35s ease;
+    box-shadow: -4px 0 30px rgba(0,0,0,0.3);
+  }
+  .nav-links.open { right: 0; }
+  .nav-links li a {
+    display: block;
+    padding: 14px 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+}
+
+
+
+
 </style>
 </head>
 <body>
@@ -411,12 +471,19 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+  <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+  <span></span>
+  <div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
+  <span></span>
+  <span></span>
+</button>
 </nav>
+
 
 <!-- HOME -->
 <section id="home">
   <div class="home-left">
-    <div class="home-tag">◉ Available for Opportunities</div>
+    
     <h1 class="home-name"><span class="name-n">N</span>andhini B</h1>
     <div class="home-role">B.Tech Information Technology &nbsp;·&nbsp; <span>Full Stack Developer | UI/UX Designer</span></div>
     <p class="home-quote">"Design is not just what it looks like — design is how it works. Build with purpose, code with passion."</p>
@@ -464,15 +531,14 @@
       <p>My primary interests are Frontend Development and UI/UX Design, where I enjoy transforming ideas into interactive and meaningful designs. With strong communication, leadership, critical thinking, and adaptability skills, I'm eager to grow as a Web Developer or Designer and contribute to innovative IT projects.</p>
       <div class="skills-chips">
         <div class="chip">HTML / CSS</div>
-        <div class="chip">JavaScript</div>
+        
         <div class="chip">Java</div>
         <div class="chip">UI/UX Design</div>
         <div class="chip">Figma</div>
         <div class="chip">Claude AI</div>
-        <div class="chip">Communication</div>
-        <div class="chip">Adaptability</div>
+       
         <div class="chip">Full Stack Development</div>
-        <div class="chip">Leadership</div>
+       
       </div>
     </div>
     <div class="edu-stack reveal">
@@ -641,6 +707,23 @@
       </div>
     </div>
   </div>
+  <script>
+function toggleNav() {
+  var nav = document.getElementById('navLinks');
+  var ham = document.getElementById('hamburger');
+  var overlay = document.getElementById('navOverlay');
+  nav.classList.toggle('open');
+  ham.classList.toggle('open');
+  overlay.classList.toggle('open');
+  document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+}
+function closeNav() {
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
 </section>
 
 <footer>
